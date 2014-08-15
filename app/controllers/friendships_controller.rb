@@ -1,5 +1,6 @@
 class FriendshipsController < ApplicationController
   def create
+    sleep 2
     out_friend = current_user.id
     in_friend = params[:user_id]
 

@@ -21,10 +21,12 @@ $(document).ready(function() {
       type: "POST",
       success: function(resp) {
         $button.remove();
-        console.log(resp)
+        console.log(resp);
       }
     });
 
+    $button.prop("disabled", true);
+    $button.html("Friending...");
 
   });
 });
