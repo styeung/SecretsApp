@@ -4,6 +4,23 @@ class User < ActiveRecord::Base
   has_many :authored_secrets, class_name: "Secret", foreign_key: :author_id
   has_many :received_secrets, class_name: "Secret", foreign_key: :recipient_id
 
+  has_many(
+    :in_friendships,
+    :class_name => "Friendship",
+    :foreign_key => :in_friend_id,
+    :primary_key => :id
+  )
+
+  has_many(
+    :out_friendships,
+    :class_name => "Friendship",
+    :foreign_key => :out_friend_id,
+    :primary_key => :id
+  )
+
+  has_many :out_friends, :through => :in_friendships, :source => :out_friend
+  has_many :in_friends, :through => :out_friendships, :source => :in_friend
+
   validates :password_digest, presence: { message: "Password can't be blank" }
   validates :password, length: { minimum: 6, allow_nil: true }
   validates :session_token, :username, presence: true

@@ -2,12 +2,18 @@ class UsersController < ApplicationController
   before_filter :require_current_user!, :only => [:index, :show]
   before_filter :require_no_current_user!, :only => [:create, :new]
 
+  def index
+    @users = User.all
+    render :index
+  end
+
   def create
     @user = User.new(user_params)
 
     if @user.save
       sign_in(@user)
-      redirect_to user_url(@user)
+      #changed from user_url(user)
+      redirect_to users_url
     else
       render :json => @user.errors.full_messages
     end
