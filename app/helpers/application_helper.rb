@@ -8,6 +8,7 @@ module ApplicationHelper
   end
 
   def which_toggle(out_id, in_id)
+    return if out_id == in_id
     if Friendship.can_friend?(out_id, in_id)
       return "can-friend"
     else

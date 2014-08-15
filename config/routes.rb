@@ -6,5 +6,8 @@ SecretShareAjax::Application.routes.draw do
 
   resource :session, :only => [:create, :destroy, :new]
   resources :secrets, only: :create
+
   root :to => "users#show"
+
+  delete 'users/:user_id/friendships', to: 'friendships#destroy'
 end

@@ -13,8 +13,13 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    @friendship = Friendship.find(params[:id])
-    @friendship.destroy!
+    out_friend = current_user.id
+    in_friend = params[:user_id]
+
+    @friendship = Friendship.where("out_friend_id = ? AND in_friend_id = ?",
+                                  out_friend, in_friend)
+
+    Friendship.destroy(@friendship.first.id)
 
     head 200
   end
