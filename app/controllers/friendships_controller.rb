@@ -8,6 +8,6 @@ class FriendshipsController < ApplicationController
       in_friend_id: in_friend
     )
 
-    redirect_to users_url
+    render json: @friendship
   end
 end

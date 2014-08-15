@@ -1,7 +1,32 @@
 <h1>All Users</h1>
-<ul>
+<ul class="group">
 <% @users.each do |user| %>
   <li><%= user.username %></li>
-  <%= render "friendships/form", user: user if Friendship.can_friend?(current_user.id, user.id) %>
+  <% if Friendship.can_friend?(current_user.id, user.id) %>
+    <button class="friend" data-infriendid="<%= user.id %>">Add Friend</button>
+  <% end %>
 <% end %>
 </ul>
+
+<script>
+
+$(document).ready(function() {
+  $(".group").on("click", ".friend", function(event){
+    var $button = $(event.currentTarget)
+    var infriendId = $button.attr("data-infriendid");
+    var url = "/users/"+infriendId+"/friendships";
+
+    $.ajax({
+      url: url,
+      type: "POST",
+      success: function(resp) {
+        $button.remove();
+        console.log(resp)
+      }
+    });
+
+
+  });
+});
+
+</script>
