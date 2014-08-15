@@ -2,9 +2,10 @@
 <ul class="group">
 <% @users.each do |user| %>
   <li><%= user.username %></li>
-  <% if Friendship.can_friend?(current_user.id, user.id) %>
+  <div class="friend-buttons <%= which_toggle(current_user.id, user.id) %>">
     <button class="friend" data-infriendid="<%= user.id %>">Add Friend</button>
-  <% end %>
+    <button class="unfriend" data-infriendid="<%= user.id %>">Unfriend</button>
+  </div>
 <% end %>
 </ul>
 
@@ -15,20 +16,36 @@ $(document).ready(function() {
     var $button = $(event.currentTarget)
     var infriendId = $button.attr("data-infriendid");
     var url = "/users/"+infriendId+"/friendships";
-
     $.ajax({
       url: url,
       type: "POST",
       success: function(resp) {
-        $button.remove();
+        $($button.closest("div")).removeClass("can-friend");
+        $($button.closest("div")).addClass("can-unfriend");
         console.log(resp);
       }
     });
-
     $button.prop("disabled", true);
     $button.html("Friending...");
 
   });
+
+  // $(".group").on("click", ".unfriend", function(event){
+//     var $button = $(event.currentTarget)
+//     var infriendId = $button.attr("data-infriendid");
+//     var url = "/users/"+infriendId+"/friendships";
+//     $.ajax({
+//       url: url,
+//       type: "POST",
+//       success: function(resp) {
+//         $button.remove();
+//         console.log(resp);
+//       }
+//     });
+//     $button.prop("disabled", true);
+//     $button.html("Friending...");
+//
+//   });
 });
 
 </script>

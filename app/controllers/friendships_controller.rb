@@ -11,4 +11,11 @@ class FriendshipsController < ApplicationController
 
     render json: @friendship
   end
+
+  def destroy
+    @friendship = Friendship.find(params[:id])
+    @friendship.destroy!
+
+    head 200
+  end
 end
