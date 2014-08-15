@@ -50,3 +50,5 @@ group :development do
   gem 'pry-rails'
   gem 'quiet_assets'
 end
+
+gem 'underscore-rails', '~> 1.6.0'

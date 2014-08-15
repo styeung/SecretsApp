@@ -13,3 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+function addSecretTagSelect () {
+  var templateCode = $("#select-template").html();
+
+  var templateFn = _template(templateCode);
+
+  var renderedContent = templateFn({tags});
+
+  $("#secret-tag-selects").html(renderedContent);
+
+}

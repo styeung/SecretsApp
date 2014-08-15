@@ -7,7 +7,9 @@
   <% end %>
 </ul>
 
-<%= render "secrets/form", user: @user, author: current_user%>
+<%= render "secrets/form"%>
+
+<a href="#" id="add-tag-buttom">Add Tag</a>
 
 <script>
   $(document).ready(function() {
@@ -28,6 +30,26 @@
           $("#secret-list").prepend($("<li>"+resp["title"]+"</li>"));
         }
       })
-    })
+    });
+
+    $("#add-tag-button").on("click", function(event) {
+      addSecretTagSelect();
+    });
   });
+</script>
+
+<script type="application/json" id="bootstrapped_tags_json">
+  {"tags": <%= Tag.all.to_json.html_safe %> }
+</script>
+
+<script id="parsed_tags">
+  var tags = JSON.parse($("#bootstrapped_tags_json").html());
+</script>
+
+<script type="text/template" id="select-template">
+  <select>
+    <% _(parsed_tags).each(function (tag) { %>
+      <option value="<%= tag.id %>"><%= tag.name %><option>
+    <% }); %>
+  </select>
 </script>
